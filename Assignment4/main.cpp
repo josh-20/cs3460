@@ -1,8 +1,7 @@
 #include "sortutils.hpp"
-
+#include <iostream>
 #include <algorithm>
 #include <array>
-#include <iostream>
 #include <list>
 #include <random>
 
@@ -18,14 +17,17 @@ SourceArray generateRandomArray()
 
 int main()
 {
-    SourceArray sorted = generateRandomArray();
+    auto random = generateRandomArray();
+    auto sorted = random;
     std::sort(std::begin(sorted), std::end(sorted));
-    SourceArray reverse = generateRandomArray();
-    std::reverse(std::begin(reverse), std::end(reverse));
-    SourceArray rotate = generateRandomArray();
-    std::rotate(std::begin)
-    SourceArray random = generateRandomArray();
-    SourceArray organ = generateRandomArray();
+    auto reverseList = sorted;
+    std::reverse(std::begin(reverseList), std::end(reverseList));
+    auto rotateList = sorted;
+    std::rotate(rotateList.begin(), rotateList.begin() + 1, rotateList.end());
+    auto organ = sorted;
+    organPipeStdArray(organ);
+    //evaluateRawArray();
+    evaluateStdArray(random, sorted, reverseList, organ, rotateList);
+    //evaluateStdVector();
 
-   eval
-}
+}  
