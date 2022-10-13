@@ -16,9 +16,9 @@ void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
 }
 void organPipeStdArray(SourceArray& data)
 {
-    for (int i = 0; i <= data.size() / 2; i++)
+    for (int i = data.size()/2; i < data.size(); i++)
     {
-        data[data.size() / 2 + i] = data[data.size() / 2 - i];
+        data[i] = data[data.size() - i - 1];
     }
 }
 void evaluateRawArray(const SourceArray& random, const SourceArray& sorted,
@@ -47,7 +47,9 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted,
     }
 
     { // second scope to save stack space
+    //   std::sort(std::execution::par_unseq, parallel2.begin(), parallel2.end()); how to do parallel
         auto total = 0;
+        auto totalp = 0;
         for (int i = 0; i <= HOW_MANY_TIMES; i++)
         {
             auto tempReverse = reversed;
@@ -58,6 +60,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted,
                 std::chrono::duration_cast<std::chrono::milliseconds>(end -
                                                                       start)
                     .count());
+            
         }
         std::cout << "Reveresed Time:  " << total << " ms" << std::endl;
     }
