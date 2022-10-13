@@ -14,4 +14,9 @@ build
 .vscode/settings.json
 .vscode
 a.out
-`
+_deps
+libs
+lib/
+ArrayPerformance
+UnitTestRunner
+
