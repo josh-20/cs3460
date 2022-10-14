@@ -15,11 +15,12 @@ int main(int argc, char* argv[])
 
 SourceArray generateRandomArray()
 {
-    std::default_random_engine engine{0u};
-    std::uniform_int_distribution<> dist{MIN_VALUE, MAX_VALUE};
+    std::default_random_engine engine{ 0u };
+    std::uniform_int_distribution<> dist{ MIN_VALUE, MAX_VALUE };
 
     SourceArray array;
-    std::generate(array.begin(), array.end(), [&] { return dist(engine); });
+    std::generate(array.begin(), array.end(), [&]
+                  { return dist(engine); });
     return array;
 }
 
