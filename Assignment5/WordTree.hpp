@@ -8,11 +8,11 @@ struct TreeNode{
 
 class WordTree{
     public:
-        void add(std::string);
-        bool find();
-        std::vector<std::string> predict();
+        void add(std::string word);
+        bool find(std::string word);
+        std::vector<std::string> predict(std::string partial, std::uint8_t howMany);
         std::size_t size();
     private:
         std::shared_ptr<TreeNode> m_root = std::make_shared<TreeNode>(TreeNode());
-              
+
 };
