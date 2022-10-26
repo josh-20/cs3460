@@ -99,100 +99,100 @@ TEST(WordTree_Find, CanFindWordWithCommonPrefix)
     ASSERT_FALSE(wordTree.find("whosoever"));
 }
 
-// TEST(WordTree_Predict, CanPredictWithNoWordsInTree)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, CanPredictWithNoWordsInTree)
+{
+    WordTree wordTree;
 
-//     ASSERT_EQ(0, wordTree.predict("hello", 1).size());
-// }
+    ASSERT_EQ(0, wordTree.predict("hello", 1).size());
+}
 
-// TEST(WordTree_Predict, CanPredictEmptyString)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, CanPredictEmptyString)
+{
+    WordTree wordTree;
 
-//     wordTree.add("hello");
+    wordTree.add("hello");
 
-//     ASSERT_EQ(0, wordTree.predict("", 1).size());
-// }
+    ASSERT_EQ(0, wordTree.predict("", 1).size());
+}
 
-// TEST(WordTree_Predict, CanPredictWithSingleLetter)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, CanPredictWithSingleLetter)
+{
+    WordTree wordTree;
 
-//     wordTree.add("zoo");
-//     wordTree.add("acknowledges");
-//     wordTree.add("acknowledging");
-//     wordTree.add("acorn");
-//     wordTree.add("acorns");
-//     wordTree.add("acoustic");
-//     wordTree.add("zebras");
+    wordTree.add("zoo");
+    wordTree.add("acknowledges");
+    wordTree.add("acknowledging");
+    wordTree.add("acorn");
+    wordTree.add("acorns");
+    wordTree.add("acoustic");
+    wordTree.add("zebras");
 
-//     const auto predictions = wordTree.predict("a", 5);
+    const auto predictions = wordTree.predict("a", 5);
 
-//     EXPECT_EQ(5, predictions.size());
+    EXPECT_EQ(5, predictions.size());
 
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acknowledges"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acknowledging"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorn"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acoustic"));
-// }
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acknowledges"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acknowledging"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorn"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acoustic"));
+}
 
-// TEST(WordTree_Predict, CanPredictWithArbitraryPrefix)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, CanPredictWithArbitraryPrefix)
+{
+    WordTree wordTree;
 
-//     wordTree.add("zoo");
-//     wordTree.add("acknowledges");
-//     wordTree.add("acknowledging");
-//     wordTree.add("acorn");
-//     wordTree.add("acorns");
-//     wordTree.add("acoustic");
-//     wordTree.add("bounce");
-//     wordTree.add("bound");
-//     wordTree.add("boundaries");
-//     wordTree.add("boundary");
-//     wordTree.add("zebras");
+    wordTree.add("zoo");
+    wordTree.add("acknowledges");
+    wordTree.add("acknowledging");
+    wordTree.add("acorn");
+    wordTree.add("acorns");
+    wordTree.add("acoustic");
+    wordTree.add("bounce");
+    wordTree.add("bound");
+    wordTree.add("boundaries");
+    wordTree.add("boundary");
+    wordTree.add("zebras");
 
-//     const auto predictions = wordTree.predict("aco", 3);
+    const auto predictions = wordTree.predict("aco", 3);
 
-//     EXPECT_EQ(3, predictions.size());
+    EXPECT_EQ(3, predictions.size());
 
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorn"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acoustic"));
-// }
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorn"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acoustic"));
+}
 
-// TEST(WordTree_Predict, DoesNotIncludePrefixInPrediction)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, DoesNotIncludePrefixInPrediction)
+{
+    WordTree wordTree;
 
-//     wordTree.add("acknowledging");
-//     wordTree.add("acorn");
-//     wordTree.add("acorns");
-//     wordTree.add("acoustic");
+    wordTree.add("acknowledging");
+    wordTree.add("acorn");
+    wordTree.add("acorns");
+    wordTree.add("acoustic");
 
-//     const auto predictions = wordTree.predict("acorn", 2);
+    const auto predictions = wordTree.predict("acorn", 2);
 
-//     EXPECT_EQ(1, predictions.size());
+    EXPECT_EQ(1, predictions.size());
 
-//     EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
-// }
+    EXPECT_NE(end(predictions), std::find(begin(predictions), end(predictions), "acorns"));
+}
 
-// TEST(WordTree_Predict, DoesLimitPredicitionCount)
-// {
-//     WordTree wordTree;
+TEST(WordTree_Predict, DoesLimitPredicitionCount)
+{
+    WordTree wordTree;
 
-//     wordTree.add("acknowledges");
-//     wordTree.add("acknowledging");
-//     wordTree.add("acorn");
-//     wordTree.add("acorns");
-//     wordTree.add("acoustic");
+    wordTree.add("acknowledges");
+    wordTree.add("acknowledging");
+    wordTree.add("acorn");
+    wordTree.add("acorns");
+    wordTree.add("acoustic");
 
-//     ASSERT_EQ(3, wordTree.predict("ac", 3).size());
-//     ASSERT_EQ(1, wordTree.predict("ac", 1).size());
+    ASSERT_EQ(3, wordTree.predict("ac", 3).size());
+    ASSERT_EQ(1, wordTree.predict("ac", 1).size());
 
-//     ASSERT_EQ(2, wordTree.predict("aco", 2).size());
+    ASSERT_EQ(2, wordTree.predict("aco", 2).size());
 
-//     ASSERT_EQ(5, wordTree.predict("a", 10).size());
-// }
+    ASSERT_EQ(5, wordTree.predict("a", 10).size());
+}
