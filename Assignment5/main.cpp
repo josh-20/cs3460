@@ -36,10 +36,15 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
 int main()
 {
     // std::shared_ptr<WordTree> tree = readDictionary("dictionary.txt");
-    WordTree wordtree;
-    wordtree.add("what");
-    wordtree.add("nowhere");
-    wordtree.add("how");
-    std::cout << wordtree.find("wh") << std::endl;
+    WordTree wordTree;
+
+    wordTree.add("zoo");
+    wordTree.add("acknowledges");
+    wordTree.add("acknowledging");
+    wordTree.add("acorn");
+    wordTree.add("acorns");
+    wordTree.add("acoustic");
+    wordTree.add("zebras");
+    const auto predictions = wordTree.predict("a", 5);
     return 0;
 }
