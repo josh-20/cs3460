@@ -56,17 +56,22 @@ bool WordTree::find(std::string word)
    return helperforfind(word, m_root);
 
 }
-std::vector<std::string> helperforPartial(std::vector<std::string> words, std::string partial, std::uint8_t howmany, std::shared_ptr<TreeNode> root){
+std::vector<std::string> helperforPartial(std::vector<std::string> words, std::string partial, std::uint8_t howmany, std::shared_ptr<TreeNode> root, std::string wordToSave){
     if (words.size() == howmany){
         return words;
     }
     for(int i = 0; i < root->m_children.size(); i++){
-        if {}        
+        if(root->m_children[i] == NULL){
+            return words;
+        }
+
+                
     }
 }
 std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t howMany){
     std::vector<std::string> words = std::vector<std::string>();
-    words = helperforPartial(words, partial, howMany, m_root); 
+    std::string word;
+    words = helperforPartial(words, partial, howMany, m_root, word); 
     return words;
 }
 std::size_t WordTree::size()
