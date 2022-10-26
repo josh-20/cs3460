@@ -1,8 +1,9 @@
 #include "WordTree.hpp"
-#include <iostream>
+
 #include <algorithm>
-#include <string>
 #include <fstream>
+#include <iostream>
+#include <string>
 
 std::shared_ptr<WordTree> readDictionary(std::string filename)
 {
@@ -20,9 +21,11 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
         }
         // Keep only if everything is an alphabetic character -- Have to send isalpha an unsigned char or
         // it will throw exception on negative values; e.g., characters with accent marks.
-        if (std::all_of(word.begin(), word.end(), [](unsigned char c) { return std::isalpha(c); }))
+        if (std::all_of(word.begin(), word.end(), [](unsigned char c)
+                        { return std::isalpha(c); }))
         {
-            std::transform(word.begin(), word.end(), word.begin(), [](char c) { return static_cast<char>(std::tolower(c)); });
+            std::transform(word.begin(), word.end(), word.begin(), [](char c)
+                           { return static_cast<char>(std::tolower(c)); });
             wordTree->add(word);
         }
     }
@@ -30,7 +33,13 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
     return wordTree;
 }
 
-int main(){
-    std::shared_ptr<WordTree> tree = readDictionary("dictionary.txt");
+int main()
+{
+    // std::shared_ptr<WordTree> tree = readDictionary("dictionary.txt");
+    WordTree wordtree;
+    wordtree.add("what");
+    wordtree.add("nowhere");
+    wordtree.add("how");
+    std::cout << wordtree.find("wh") << std::endl;
     return 0;
 }
