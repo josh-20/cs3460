@@ -49,11 +49,20 @@ int main()
         rlutil::locate(1, 1);
         rlutil::setString(word);
         rlutil::locate(static_cast<int>(word.size() + 1), y);
-        char letter = static_cast<char>(rlutil::getkey());
-        std::string s(1, letter);
-        word += s;
-        rlutil::showcursor();
-        rlutil::setChar(letter);
+        char key = static_cast<char>(rlutil::getkey());
+        if (int(key) == rlutil::KEY_BACKSPACE)
+        {
+            rlutil::locate(x - 1, y);
+            word.pop_back();
+            rlutil::setChar(rlutil::KEY_SPACE);
+        }
+        else
+        {
+            std::string s(1, key);
+            word += s;
+            rlutil::showcursor();
+            rlutil::setChar(key);
+        }
         rlutil::cls();
         rlutil::locate(x, y + 3);
         rlutil::setString(text);
