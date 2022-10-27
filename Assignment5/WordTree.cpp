@@ -61,10 +61,12 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
 {
     auto index = partial[0] - 'a';
     std::vector<std::string> words;
-    if(partial == ""){
+    if (partial == "")
+    {
         return words;
     }
-    else if(m_root->m_children[index] == NULL){
+    else if (m_root->m_children[index] == NULL)
+    {
         return words;
     }
     std::queue<std::tuple<std::shared_ptr<TreeNode>, std::string>> queue;
@@ -72,14 +74,19 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
     std::shared_ptr<TreeNode> tempNode = m_root;
     auto count = index;
     std::string word = partial;
-    for (char i : partial)    {
+    for (char i : partial)
+    {
+        if (tempNode->m_children[count] == NULL)
+        {
+            return words;
+        }
         tempNode = tempNode->m_children[count];
         if (i == partial.back())
         {
             queue.push(std::make_tuple(tempNode, partial));
         }
         word = word.erase(0, 1);
-        count = word[0] - 'a';        
+        count = word[0] - 'a';
     }
     // go down the tree starting at first child node AKA first letter.
     while (!queue.empty())
@@ -97,23 +104,20 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
             words.push_back(std::get<1>(current));
             return words;
         }
-        else if (std::get<0>(current)->m_endOfWord == true)
+        if (std::get<0>(current)->m_endOfWord == true)
         {
             words.push_back(std::get<1>(current));
-     
         }
-            // iterrate over all children and add them to the queue if not true
+        // iterrate over all children and add them to the queue if not true
         for (int i = 0; i < std::get<0>(current)->m_children.size(); i++)
         {
             if (std::get<0>(current)->m_children[i] != NULL)
             {
                 char charNum = static_cast<char>(i + 'a');
-                // std::cout << charNum << std::endl;
                 auto add = std::make_tuple(std::get<0>(current)->m_children[i], std::get<1>(current) + charNum);
                 queue.push(add);
             }
         }
-
     }
     return words;
 }
