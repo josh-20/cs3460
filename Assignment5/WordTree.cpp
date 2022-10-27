@@ -85,6 +85,10 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
     while (!queue.empty())
     {
         // grab first child off the queue
+        if (words.size() == howMany)
+        {
+            return words;
+        }
         std::tuple<std::shared_ptr<TreeNode>, std::string> current = queue.front();
         queue.pop();
         // see if the were at end of word if we are we add the word to the list of words
