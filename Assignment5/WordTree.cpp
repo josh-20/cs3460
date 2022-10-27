@@ -61,39 +61,55 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
 {
     auto index = partial[0] - 'a';
     std::vector<std::string> words;
-    std::queue<std::tuple<std::shared_ptr<TreeNode>, std::string>> queue;
-    std::string letter(1, partial[0]);
-    if (m_root->m_children[index] == NULL)
-    {
+    if(partial == ""){
         return words;
     }
-    queue.push({ m_root->m_children[index], letter });
+    else if(m_root->m_children[index] == NULL){
+        return words;
+    }
+    std::queue<std::tuple<std::shared_ptr<TreeNode>, std::string>> queue;
+    auto first = std::make_tuple(m_root->m_children[index], partial);
+    std::shared_ptr<TreeNode> tempNode = m_root;
+    auto count = index;
+    std::string word = partial;
+    for (char i : partial)    {
+        tempNode = tempNode->m_children[count];
+        if (i == partial.back())
+        {
+            queue.push(std::make_tuple(tempNode, partial));
+        }
+        word = word.erase(0, 1);
+        count = word[0] - 'a';        
+    }
     // go down the tree starting at first child node AKA first letter.
-    while (!queue.empty()|| words.size() == howMany - 1)
+    while (!queue.empty())
     {
-        // erase first letter of partial to get next letter for child
-        partial = partial.erase(0, 1);
-        std::string nextLetter(1, partial[0]);
         // grab first child off the queue
         std::tuple<std::shared_ptr<TreeNode>, std::string> current = queue.front();
-        std::cout << std::get<1>(current) << std::endl;
+        queue.pop();
         // see if the were at end of word if we are we add the word to the list of words
-        
-        if (std::get<0>(current)->m_endOfWord == true)
+        if (std::get<0>(current)->m_endOfWord == true && std::get<1>(current) == partial)
         {
-            std::get<1>(current) += nextLetter;
             words.push_back(std::get<1>(current));
-        }else
+            return words;
+        }
+        else if (std::get<0>(current)->m_endOfWord == true)
         {
+            words.push_back(std::get<1>(current));
+     
+        }
             // iterrate over all children and add them to the queue if not true
-            for (std::shared_ptr<TreeNode> child : std::get<0>(current)->m_children)
+        for (int i = 0; i < std::get<0>(current)->m_children.size(); i++)
+        {
+            if (std::get<0>(current)->m_children[i] != NULL)
             {
-                if (child != NULL)
-                {
-                    queue.push({ child, std::get<1>(current) += nextLetter });
-                }
+                char charNum = static_cast<char>(i + 'a');
+                // std::cout << charNum << std::endl;
+                auto add = std::make_tuple(std::get<0>(current)->m_children[i], std::get<1>(current) + charNum);
+                queue.push(add);
             }
         }
+
     }
     return words;
 }
