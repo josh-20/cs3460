@@ -50,11 +50,14 @@ int main()
         rlutil::setString(word);
         rlutil::locate(static_cast<int>(word.size() + 1), y);
         char key = static_cast<char>(rlutil::getkey());
-        if (int(key) == rlutil::KEY_BACKSPACE)
+        if (key == rlutil::KEY_BACKSPACE)
         {
-            rlutil::locate(x - 1, y);
-            word.pop_back();
-            rlutil::setChar(rlutil::KEY_SPACE);
+            if (word != "")
+            {
+                rlutil::locate(x - 1, y);
+                word.pop_back();
+                rlutil::setChar(rlutil::KEY_SPACE);
+            }
         }
         else
         {
