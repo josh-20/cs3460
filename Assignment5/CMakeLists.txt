@@ -50,8 +50,8 @@ FetchContent_Declare(
 	GIT_TAG			release-1.11.0
 )
 
-FetchContent_MakeAvailable(googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 
 FetchContent_Declare(
