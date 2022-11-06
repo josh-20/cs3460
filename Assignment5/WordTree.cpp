@@ -20,7 +20,7 @@ std::size_t helperForAdd(std::string word, std::shared_ptr<TreeNode> root)
             return 1;
         }
         return 0;
-    };
+    }
     int index = int(word[0]) - 'a';
     if (root->m_children[index] == NULL)
     {

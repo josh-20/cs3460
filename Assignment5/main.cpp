@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 std::shared_ptr<WordTree> readDictionary(std::string filename)
 {
@@ -34,6 +35,11 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
     return wordTree;
 }
 
+std::string getCurrentWord(std::vector<std::string> words)
+{
+    return words[words.size() - 1];
+}
+
 int main()
 {
     std::shared_ptr<WordTree> tree = readDictionary("dictionary.txt");
@@ -41,36 +47,57 @@ int main()
     auto y = 1;
     auto x2 = 1;
     auto y2 = 4;
-    std::string word = "";
+    std::vector<std::string> words;
+    std::string current = "";
+    words.push_back("");
     std::string text = "--- prediction ---";
+    rlutil::cls();
 
     while (true)
     {
-        rlutil::locate(1, 1);
-        rlutil::setString(word);
-        rlutil::locate(static_cast<int>(word.size() + 1), y);
+        rlutil::locate(x2, y2);
+        rlutil::setString(text);
+        rlutil::locate(x, y);
         char key = static_cast<char>(rlutil::getkey());
-        if (key == rlutil::KEY_BACKSPACE)
+        if (isalpha(key))
         {
-            if (word != "")
+            rlutil::setChar(key);
+            key = static_cast<char>(tolower(key));
+            words[words.size() - 1] += key;
+            x += 1;
+        }
+        else if (key == rlutil::KEY_BACKSPACE)
+        {
+            if (words[0] != "")
             {
-                rlutil::locate(x - 1, y);
-                word.pop_back();
-                rlutil::setChar(rlutil::KEY_SPACE);
+                if (words[words.size() - 1] != "")
+                {
+                    rlutil::locate(x -= 1, y);
+                    rlutil::setChar(rlutil::KEY_SPACE);
+                    words[words.size() - 1].pop_back();
+                }
+                else
+                {
+                    rlutil::locate(x -= 1, y);
+                    rlutil::setChar(rlutil::KEY_SPACE);
+                    words.pop_back();
+                }
             }
         }
-        else
+        else if (key == rlutil::KEY_SPACE)
         {
-            std::string s(1, key);
-            word += s;
-            rlutil::showcursor();
-            rlutil::setChar(key);
+            x += 1;
+            rlutil::locate(x, y);
+            words.push_back("");
         }
-        rlutil::cls();
-        rlutil::locate(x, y + 3);
-        rlutil::setString(text);
-        std::vector<std::string> words = tree->predict(word, static_cast<uint8_t>(rlutil::trows() - 5));
-        for (std::string i : words)
+        std::vector<std::string> predictions = tree->predict(words[words.size() - 1], static_cast<uint8_t>(rlutil::trows() - 5));
+        for (int i = 0; i < static_cast<int>(rlutil::trows() - 5); i++)
+        {
+            rlutil::locate(x2, y2 += 1);
+            rlutil::setString("                                       ");
+        }
+        y2 = 4;
+        for (std::string i : predictions)
         {
             rlutil::locate(x2, y2 += 1);
             rlutil::setString(i);
