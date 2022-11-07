@@ -5,23 +5,26 @@
 
 LifeSimulator::LifeSimulator(std::uint8_t sizeX, std::uint8_t sizeY)
 {
-    std::vector<std::vector<bool>> m_board;
-    for (int i = 0; i < sizeX; i++){
-        for(int j = 0; j < sizeY; j++){
-            m_board[i][j] = false;
+    for (int i = 0; i < sizeY; i++){
+        for(int j = 0; j < sizeX; j++){
+            m_board[j].push_back(false);
         }
     }
 }
 
-void insertPattern(const Pattern& pattern, std::uint8_t startX, std::uint8_t startY){
+void LifeSimulator::insertPattern(const Pattern& pattern, std::uint8_t startX, std::uint8_t startY){
     
 }
 
-void update(){
-    
+void LifeSimulator::update(){
+    std::vector<std::vector<bool>>& newBoard = m_board;
+    // Update new board
+    // using the four rules
+    std::swap(m_board, newBoard);    
 }
 
-bool getCell(std::uint8_t x, std::uint8_t y){
+bool LifeSimulator::getCell(std::uint8_t x, std::uint8_t y) const{
+    return m_board[x][y];
 }
 
 
