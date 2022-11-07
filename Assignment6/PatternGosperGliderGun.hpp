@@ -1,6 +1,6 @@
 #include "Pattern.hpp"
 
-class PatternGosperGliderGun {
+class PatternGosperGliderGun : public Pattern {
     public: 
     
 };

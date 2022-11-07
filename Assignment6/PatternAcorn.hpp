@@ -1,5 +1,5 @@
 #include "Pattern.hpp"
 
-class PatternAcorn{
+class PatternAcorn : public Pattern {
     public: 
 };

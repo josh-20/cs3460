@@ -1,6 +1,6 @@
 #include "Pattern.hpp"
 
 
-class PatternBlinker {
+class PatternBlinker : public Pattern{
     public:
 };

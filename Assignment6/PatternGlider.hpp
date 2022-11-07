@@ -1,6 +1,6 @@
 #include "Pattern.hpp"
 
-class PatternGlider {
+class PatternGlider: public Pattern{
     public:
 
 };
