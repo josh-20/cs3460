@@ -23,6 +23,31 @@ void LifeSimulator::update(){
             newBoard[j].push_back(false);
         }
     }
+    //create the updated board
+    for(int i = 0; i < m_board.size(); i++){
+        for(int j = 0; j < m_board[0].size(); j++){
+            uint8_t aliveNeighbors = 0;
+            // count number of alive neighbors
+            for (int l = -1; l <= 1; l++){
+                for(int k = -1; k <= 1; k++){
+                    if(l != 0 && j != 0){
+                        if (m_board[i + l][j + k] == true){
+                            aliveNeighbors += 1;
+                        }
+                    }
+                }
+            }
+            //rule check
+            if(aliveNeighbors >= 2 && aliveNeighbors <= 3){
+                newBoard[i][j] = true;
+            }else if(aliveNeighbors > 3){
+                newBoard[i][j] = false;
+            }else{
+                newBoard[i][j] = false;
+            }
+        }
+    }
+    // get number of neighbors 
 
     // iterate over m_board and check each cell's neighbors and check for alive cells
     // based on  
