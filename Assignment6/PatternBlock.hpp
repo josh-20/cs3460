@@ -1,15 +1,12 @@
 #include "Pattern.hpp"
 #include <iostream>
-
+#include <vector>
 class PatternBlock : public Pattern{
-
     public:
-        PatternBlock();
-        PatternBlock(std::uint8_t startX, std::uint8_t startY);
-
+        std::uint8_t getSizeX();
+        std::uint8_t getSizeY();
+        bool getCell(std::uint8_t x, std::uint8_t y);
 
     private:
-        std::uint8_t startX;
-        std::uint8_t startY;   
-    
+        std::vector<std::vector<bool>> m_Pattern;
 };
