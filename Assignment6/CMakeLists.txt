@@ -4,10 +4,9 @@ set(project_name ConwaysLife)
 project(${project_name})
 
 set(HEADER_FILES LifeSimulator.hpp Pattern.hpp PatternAcorn.hpp PatternBlinker.hpp PatternBlock.hpp PatternGlider.hpp PatternGosperGliderGun.hpp RendererConsole.hpp Renderer.hpp )
-set(SOURCE_FILES LifeSimulator.cpp Pattern.cpp PatternAcorn.cpp PatternBlinker.cpp PatternBlock.cpp PatternGlider.cpp PatternGosperGliderGun.cpp RendererConsole.cpp Renderer.cpp)
+set(SOURCE_FILES LifeSimulator.cpp PatternAcorn.cpp PatternBlinker.cpp PatternBlock.cpp PatternGlider.cpp PatternGosperGliderGun.cpp RendererConsole.cpp)
 
 add_executable(${project_name} ${SOURCE_FILES} ${HEADER_FILES} main.cpp)
-
 set_property(TARGET ${project_name} PROPERTY CXX_STANDARD 20)
 
 
@@ -36,6 +35,3 @@ if (CLANG_FORMAT)
         ${SOURCE_FILES_PATHS})
     add_dependencies(${project_name} ClangFormat)
 endif()
-include(FetchContent)
-FetchContent_MakeAvailable(fmt)
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
