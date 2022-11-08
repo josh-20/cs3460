@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Pattern.hpp"
+#include <vector>
 
 class LifeSimulator
 {

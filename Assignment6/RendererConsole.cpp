@@ -3,5 +3,5 @@
 
 
 void RendererConsole::render(const LifeSimulator& simulation){
-
+    
 }

@@ -12,10 +12,24 @@ LifeSimulator::LifeSimulator(std::uint8_t sizeX, std::uint8_t sizeY)
     }
 }
 void LifeSimulator::insertPattern(const Pattern& pattern, std::uint8_t startX, std::uint8_t startY){
-      
+    for(int i = 0; i < pattern.getSizeX(); i++){
+        for (int j = 0; j < pattern.getSizeY(); j++){
+            if (pattern.getCell(i,j) == true){
+                m_board[startX + i][startY + j] = true;
+            }
+        }
+    }      
 }
 
 void LifeSimulator::update(){
+
+    // get number of neighbors 
+
+    // iterate over m_board and check each cell's neighbors and check for alive cells
+    // based on  
+    // Update new board
+    // using the four rules
+    
     std::vector<std::vector<bool>> newBoard;
     for (int i = 0; i < m_board.size(); i++){
         for(int j = 0; j < m_board[0].size(); j++){
@@ -46,12 +60,6 @@ void LifeSimulator::update(){
             }
         }
     }
-    // get number of neighbors 
-
-    // iterate over m_board and check each cell's neighbors and check for alive cells
-    // based on  
-    // Update new board
-    // using the four rules
     std::swap(m_board, newBoard);    
 }
 bool LifeSimulator::getCell(std::uint8_t x, std::uint8_t y) const{

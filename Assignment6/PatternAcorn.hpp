@@ -9,4 +9,5 @@ class PatternAcorn : public Pattern {
         bool getCell(std::uint8_t x, std::uint8_t y);
     private:
         std::vector<std::vector<bool>> m_Pattern;
+
 };
