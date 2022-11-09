@@ -22,9 +22,9 @@ void LifeSimulator::insertPattern(const Pattern& pattern, std::uint8_t startX, s
     if (pattern.getSizeY() < (getSizeY() - startY))
     {
 
-        for (int i = 0; i < pattern.getSizeX(); i++)
+        for (uint8_t i = 0; i < pattern.getSizeX(); i++)
         {
-            for (int j = 0; j < pattern.getSizeY(); j++)
+            for (uint8_t j = 0; j < pattern.getSizeY(); j++)
             {
                 if (startX + i >= m_board.size() || startX + i < 0)
                 {
@@ -64,9 +64,9 @@ void LifeSimulator::update()
         }
     }
     // create the updated board
-    for (int i = 0; i < getSizeX(); i++)
+    for (uint8_t i = 0; i < getSizeX(); i++)
     {
-        for (int j = 0; j < getSizeY(); j++)
+        for (uint8_t j = 0; j < getSizeY(); j++)
         {
             uint8_t aliveNeighbors = 0;
             // count number of alive neighbors
@@ -122,9 +122,9 @@ bool LifeSimulator::getCell(std::uint8_t x, std::uint8_t y) const
 }
 std::uint8_t LifeSimulator::getSizeX() const
 {
-    return m_board.size();
+    return static_cast<uint8_t>(m_board.size());
 }
 std::uint8_t LifeSimulator::getSizeY() const
 {
-    return m_board[0].size();
+    return static_cast<uint8_t>(m_board[0].size());
 }
