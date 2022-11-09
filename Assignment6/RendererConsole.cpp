@@ -27,7 +27,6 @@ void RendererConsole::render(const LifeSimulator& simulation)
     {
         for (int j = 0; j < simulation.getSizeY(); j++)
         {
-
             if (simulation.getCell(i, j) != m_state[i][j])
             {
                 rlutil::locate(j, i);
