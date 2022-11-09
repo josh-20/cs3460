@@ -88,7 +88,11 @@ void LifeSimulator::update()
                 }
                 // rule check
             }
-            if (aliveNeighbors == 2 || aliveNeighbors == 3)
+            if (aliveNeighbors == 2)
+            {
+                newBoard[i][j] = true;
+            }
+            else if (aliveNeighbors == 3)
             {
                 newBoard[i][j] = true;
             }

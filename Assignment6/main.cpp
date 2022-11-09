@@ -15,7 +15,6 @@ int main()
     LifeSimulator game(rlutil::trows() + 10, rlutil::tcols() + 10);
     game.insertPattern(PatternGosperGliderGun(), 1, 1);
     RendererConsole renderer;
-
     rlutil::cls();
     rlutil::hidecursor();
     for (int i = 0; i < 20; i++)
