@@ -19,14 +19,13 @@ void RendererConsole::populate(uint8_t sizeX, uint8_t sizeY)
 
 void RendererConsole::render(const LifeSimulator& simulation)
 {
-
     if (m_state.size() == 0)
     {
-        populate(simulation.getSizeX(), simulation.getSizeY());
+        populate(simulation.getSizeX(), simulation.getSizeX());
     }
-    for (int i = 0; i < simulation.getSizeX(); i++)
+    for (uint8_t i = 0; i < simulation.getSizeX(); i++)
     {
-        for (int j = 0; j < simulation.getSizeY(); j++)
+        for (uint8_t j = 0; j < simulation.getSizeY(); j++)
         {
             if (simulation.getCell(i, j) != m_state[i][j])
             {

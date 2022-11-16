@@ -3,10 +3,8 @@
 PatternBlock::PatternBlock()
 {
     m_Pattern = {
-        { true, true, true, true },
-        { true, false, false, true },
-        { true, false, false, true },
-        { true, true, true, true }
+        { true, true },
+        { true, true }
     };
 }
 

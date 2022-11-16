@@ -19,21 +19,25 @@ LifeSimulator::LifeSimulator(std::uint8_t sizeX, std::uint8_t sizeY)
 }
 void LifeSimulator::insertPattern(const Pattern& pattern, std::uint8_t startX, std::uint8_t startY)
 {
-    for (int i = 0; i < pattern.getSizeX(); i++)
+    if (pattern.getSizeY() < (getSizeY() - startY))
     {
-        for (int j = 0; j < pattern.getSizeY(); j++)
+
+        for (uint8_t i = 0; i < pattern.getSizeX(); i++)
         {
-            if (startX + i >= m_board.size() || startX + i < 0)
+            for (uint8_t j = 0; j < pattern.getSizeY(); j++)
             {
-                continue;
-            }
-            else if (startY + j >= m_board.size() || startY + j < 0)
-            {
-                continue;
-            }
-            else if (pattern.getCell(i, j) == true)
-            {
-                m_board[startX + i][startY + j] = true;
+                if (startX + i >= m_board.size() || startX + i < 0)
+                {
+                    continue;
+                }
+                else if (startY + j >= m_board.size() || startY + j < 0)
+                {
+                    continue;
+                }
+                else if (pattern.getCell(i, j) == true)
+                {
+                    m_board[startX + i][startY + j] = true;
+                }
             }
         }
     }
@@ -60,9 +64,9 @@ void LifeSimulator::update()
         }
     }
     // create the updated board
-    for (int i = 0; i < m_board.size(); i++)
+    for (uint8_t i = 0; i < getSizeX(); i++)
     {
-        for (int j = 0; j < m_board[0].size(); j++)
+        for (uint8_t j = 0; j < getSizeY(); j++)
         {
             uint8_t aliveNeighbors = 0;
             // count number of alive neighbors
@@ -70,13 +74,17 @@ void LifeSimulator::update()
             {
                 for (int k = -1; k <= 1; k++)
                 {
-                    if (l != 0 && k != 0)
+                    if (l == 0 && k == 0)
                     {
-                        if (i + l >= m_board.size() || i + l < 0)
+                        continue;
+                    }
+                    else
+                    {
+                        if (i + l >= getSizeX() || i + l < 0)
                         {
                             continue;
                         }
-                        else if (j + k >= m_board[0].size() || j + k < 0)
+                        else if (j + k >= getSizeY() || j + k < 0)
                         {
                             continue;
                         }
@@ -88,9 +96,13 @@ void LifeSimulator::update()
                 }
                 // rule check
             }
-            if (aliveNeighbors == 2)
+            if (aliveNeighbors <= 1)
             {
-                newBoard[i][j] = true;
+                newBoard[i][j] = false;
+            }
+            else if (aliveNeighbors > 3)
+            {
+                newBoard[i][j] = false;
             }
             else if (aliveNeighbors == 3)
             {
@@ -98,7 +110,7 @@ void LifeSimulator::update()
             }
             else
             {
-                newBoard[i][j] = false;
+                newBoard[i][j] = getCell(i, j);
             }
         }
     }
@@ -110,9 +122,9 @@ bool LifeSimulator::getCell(std::uint8_t x, std::uint8_t y) const
 }
 std::uint8_t LifeSimulator::getSizeX() const
 {
-    return m_board.size();
+    return static_cast<uint8_t>(m_board.size());
 }
 std::uint8_t LifeSimulator::getSizeY() const
 {
-    return m_board[0].size();
+    return static_cast<uint8_t>(m_board[0].size());
 }
