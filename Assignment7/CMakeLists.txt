@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
-set(project_name TypeAhead)
+set(project_name MainRun)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
 project(${project_name})
 
-set(HEADER_FILES WordTree.hpp)
-set(SOURCE_FILES WordTree.cpp)
-set(UNIT_TEST_FILES TestWordTree.cpp)
+set(HEADER_FILES shared_ptr.hpp)
+set(SOURCE_FILES main.cpp)
+set(UNIT_TEST_FILES TestMemory.cpp)
 
-add_executable(${project_name} ${SOURCE_FILES} ${HEADER_FILES} main.cpp)
+add_executable(${project_name} ${SOURCE_FILES} ${HEADER_FILES})
 add_executable(${UNIT_TEST_RUNNER} ${SOURCE_FILES} ${HEADER_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${project_name} PROPERTY CXX_STANDARD 20)
@@ -59,6 +59,4 @@ FetchContent_Declare(
     GIT_REPOSITORY    https://github.com/fmtlib/fmt.git
     GIT_TAG           9.1.0
 )
-FetchContent_MakeAvailable(fmt)
-target_link_libraries(${UNIT_TEST_RUNNER} gtest_main fmt::fmt)
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
