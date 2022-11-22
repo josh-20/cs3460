@@ -54,11 +54,11 @@ void LifeSimulator::update()
     // using the four rules
 
     std::vector<std::vector<bool>> newBoard;
-    for (int i = 0; i < m_board.size(); i++)
+    for (int i = 0; i < static_cast<int>(m_board.size()); i++)
     {
         std::vector<bool> list;
         newBoard.push_back(list);
-        for (int j = 0; j < m_board[0].size(); j++)
+        for (int j = 0; j < static_cast<int>(m_board[0].size()); j++)
         {
             newBoard[i].push_back(false);
         }
