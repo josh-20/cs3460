@@ -5,11 +5,11 @@ namespace usu {
     class shared_ptr {
         public:
             //overloaded constructor
-            shared_ptr(T* pointer);
+            shared_ptr(T* ptr);
             // copy constructor
-            shared_ptr(const shared_ptr& pointer);
+            shared_ptr(const shared_ptr& ptr);
             //move constructor
-            shared_ptr(shared_pointer&& pointer);
+            shared_ptr(shared_pointer&& ptr);
             // destructor
             ~shared_ptr();
             // Operators           
@@ -22,8 +22,8 @@ namespace usu {
                 T m_pointer;
     };
     template<typename T>
-    shared_ptr<T>::shared_ptr(T* pointer) :
-        m_pointer(pointer),
+    shared_ptr<T>::shared_ptr(T* ptr) :
+        m_pointer(ptr),
         m_referenceCount(1)
     {
     }
@@ -46,7 +46,7 @@ namespace usu {
     }
 
     template <typename T>
-    usu::shared_ptr<T>::shared_ptr(T* pointer){
+    usu::shared_ptr<T>::shared_ptr(T* ptr){
     
     }
 
