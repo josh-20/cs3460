@@ -15,7 +15,7 @@ namespace usu {
             // Operators           
             // normal methods
             shared_ptr<T> make_shared(Args&&... args);
-            std::uint8_t use_count();
+            std::uint16_t use_count();
             T* get();
             private:
                 std::uint16_t m_referenceCount = 0;
@@ -23,7 +23,7 @@ namespace usu {
     };
     template<typename T>
     shared_ptr<T>::shared_ptr(T* pointer) :
-        m_pointer(pointer)
+        m_pointer(pointer),
         m_referenceCount(1)
     {
     }
