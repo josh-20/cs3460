@@ -1,5 +1,5 @@
 pragma once
-
+#include <iostream>
 namespace usu {
     template <typename T>
     class shared_ptr {
@@ -9,7 +9,7 @@ namespace usu {
             // copy constructor
             shared_ptr(const shared_ptr& pointer);
             //move constructor
-            shared_ptr(shared_ptr&& pointer);
+            shared_ptr(shared_pointer&& pointer);
             // destructor
             ~shared_ptr();
             // normal methods
