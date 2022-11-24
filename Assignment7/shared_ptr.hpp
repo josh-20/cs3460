@@ -14,12 +14,11 @@ namespace usu {
             ~shared_ptr();
             // Operators           
             // normal methods
-            shared_ptr<T> make_shared(Args&&... args);
             std::uint16_t use_count();
             T* get();
             private:
                 std::uint16_t m_referenceCount = 0;
-                T m_pointer;
+                T* m_pointer;
     };
     template<typename T>
     shared_ptr<T>::shared_ptr(T* ptr) :
@@ -29,7 +28,7 @@ namespace usu {
     }
     
     template <typename T, typename... Args>
-    usu::shared_ptr<T> make_shared(Args&&... args)
+    shared_ptr<T> make_shared(Args&&... args)
     {
         return shared_ptr<T>(new T(std::forward<Args>(args)...));
     }
