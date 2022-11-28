@@ -58,11 +58,13 @@ namespace usu {
     shared_ptr<T>& shared_ptr<T>::operator=(const shared_ptr& ptr){
         (*m_referenceCount)--;
         if (use_count() == 0){
+            delete m_pointer;
+            delete m_referenceCount;
             this->m_pointer = nullptr;
             this->m_referenceCount = nullptr;
         }
-        m_pointer = ptr.m_pointer;
-        m_referenceCount = ptr.m_referenceCount;
+        this->m_pointer = ptr.m_pointer;
+        this->m_referenceCount = ptr.m_referenceCount;
         (*m_referenceCount)++;
         return *this;
     }
@@ -78,13 +80,14 @@ namespace usu {
     // Destructor
     template<typename T>
     shared_ptr<T>::~shared_ptr(){
-        (*m_referenceCount)--;
-        if(use_count() == 0){
-            delete m_pointer;
-            delete m_referenceCount;
-
-            m_pointer = nullptr;
-            m_referenceCount = nullptr;
+        if(this->m_pointer != nullptr){
+            (*m_referenceCount)--;
+            if(use_count() == 0){
+                delete m_pointer;
+                delete m_referenceCount;
+                m_pointer = nullptr;
+                m_referenceCount = nullptr;
+            }
         }
     }
 
