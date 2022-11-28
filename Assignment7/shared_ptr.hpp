@@ -34,7 +34,9 @@ namespace usu {
     template<typename T>
     shared_ptr<T>::shared_ptr(const shared_ptr& ptr)
     {
-        this->m_referenceCount;
+        m_pointer = ptr.m_pointer;
+        m_referenceCount = ptr.m_referenceCount;
+        m_referenceCount += 1;
     }
     
     // Move constructor
