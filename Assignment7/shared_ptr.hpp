@@ -13,7 +13,8 @@ namespace usu {
             // destructor
             ~shared_ptr();
             // Operators 
-            shared_ptr& operator->(const shared_ptr)           
+            shared_ptr& operator->();
+            shared_ptr& operator*();           
             // normal methods
 
             std::uint16_t use_count();
