@@ -12,12 +12,14 @@ namespace usu {
             shared_ptr(shared_pointer&& ptr);
             // destructor
             ~shared_ptr();
-            // Operators           
+            // Operators 
+            shared_ptr& operator->(const shared_ptr)           
             // normal methods
+
             std::uint16_t use_count();
             T* get();
             private:
-                std::uint16_t m_referenceCount = 0;
+                unsigned int m_referenceCount = 0;
                 T* m_pointer;
     };
     template<typename T>
@@ -26,27 +28,48 @@ namespace usu {
         m_referenceCount(1)
     {
     }
+
+    // Copy constructor 
+    template<typename T>
+    shared_ptr<T>::shared_ptr(const shared_ptr& ptr)
+    {
+        this->m_referenceCount;
+    }
     
+    // Move constructor
     template <typename T, typename... Args>
     shared_ptr<T> make_shared(Args&&... args)
     {
         return shared_ptr<T>(new T(std::forward<Args>(args)...));
     }
 
-
+    // use count 
     template<typename T>
     usu::shared_ptr<T> use_count(){
         return m_referenceCount;
     }
 
+    // get 
     template<typename T>
     usu::shared_ptr<T> get(){
-
+        return         
+    }
+    template<typename T>
+    shared_ptr<T>::~shared_ptr(){
+        m_referenceCount -= 1;
+        if(m_referenceCount == 0){
+            delete m_pointer;
+        }
     }
 
-    template <typename T>
-    usu::shared_ptr<T>::shared_ptr(T* ptr){
-    
+    // Overloaded operators
+
+
+
+    template <typename T, unsigned int N>
+    shared_ptr<T[]> make_shared_array()
+    {
+        return shared_ptr<T[]>(new T[N], N);
     }
 
 };
