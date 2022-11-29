@@ -116,6 +116,57 @@ namespace usu {
         {
         }
 
+        //copy constructor
+    template<typename T>
+    shared_ptr<T[]>::shared_ptr(const shared_ptr& ptr)
+    {
+        m_pointer = ptr.m_pointer;
+        m_referenceCount = ptr.m_referenceCount;
+        m_size = ptr.m_size;
+        (*m_referenceCount)++;
+    }
+
+    
+        //move constructor
+    template<typename T>
+    shared_ptr<T[]>::shared_ptr(shared_ptr&& ptr)
+    {
+        m_pointer = ptr.m_pointer;
+        m_referenceCount = ptr.m_referenceCount;
+        m_size = ptr.m_size;
+        ptr.m_pointer = nullptr;
+    }
+        //copy operator
+    template <typename T>
+    shared_ptr<T[]>& shared_ptr<T[]>::operator=(const shared_ptr& ptr){
+        (*m_referenceCount)--;
+        if (use_count() == 0){
+            delete[] m_pointer;
+            delete m_referenceCount;
+            m_size = 0;
+            this->m_pointer = nullptr;
+            this->m_referenceCount = nullptr;
+        }
+        this->m_pointer = ptr.m_pointer;
+        this->m_referenceCount = ptr.m_referenceCount;
+        this->m_size = ptr.m_size;
+        (*m_referenceCount)++;
+        return *this;
+    }
+        // move operator
+    template<typename T>
+    shared_ptr<T[]>& shared_ptr<T[]>::operator=(shared_ptr&& ptr){
+        if (this != &ptr){
+            std::swap(m_pointer, ptr.m_pointer);
+            std::swap(m_referenceCount, ptr.m_referenceCount);
+            std::swap(m_size, ptr.m_size);
+        }
+        return *this;
+    }
+
+
+        
+
 
 
 
