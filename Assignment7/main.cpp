@@ -104,10 +104,10 @@ void demoSharedPointer()
     std::cout << "--- Member Access ---" << std::endl;
 
     p13->showMessage("from p13");
-    //p14->showMessage("from p14");
+    p14->showMessage("from p14");
 
     (*p13).showMessage("from (*p13)");
-    //(*p14).showMessage("from (*p14)");
+    (*p14).showMessage("from (*p14)");
     MyClass* x = p13.get();
     x->showMessage("from p13.get()");
     MyClass* y = p14.get();

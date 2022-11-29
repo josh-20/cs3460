@@ -46,13 +46,11 @@ namespace usu {
         m_referenceCount = ptr.m_referenceCount;
         ptr.m_pointer = nullptr;
     }
-
     template <typename T, typename... Args>
     shared_ptr<T> make_shared(Args&&... args)
     {
         return shared_ptr<T>(new T(std::forward<Args>(args)...));
     }
-
     //copy operator
     template <typename T>
     shared_ptr<T>& shared_ptr<T>::operator=(const shared_ptr& ptr){
@@ -90,7 +88,6 @@ namespace usu {
             }
         }
     }
-
     template<typename T>
     class shared_ptr<T[]>{
         public:
@@ -98,7 +95,7 @@ namespace usu {
             shared_ptr(const shared_ptr& ptr);
             shared_ptr(shared_ptr&& ptr);
             ~shared_ptr();
-            T& operator[](const int index){if(index <= m_size)return m_pointer[index];}
+            T& operator[](const int index){return m_pointer[index];}
             shared_ptr& operator=(const shared_ptr& ptr);
             shared_ptr& operator=(shared_ptr&& ptr);
             unsigned int size(){return m_size;}
@@ -111,11 +108,10 @@ namespace usu {
     template<typename T>
     shared_ptr<T[]>::shared_ptr(T* ptr, int num) : 
         m_pointer(ptr),
-        m_size(num),
-        m_referenceCount(new unsigned int(1))
+        m_referenceCount(new unsigned int(1)),
+        m_size(num)
         {
         }
-
         //copy constructor
     template<typename T>
     shared_ptr<T[]>::shared_ptr(const shared_ptr& ptr)
@@ -125,8 +121,6 @@ namespace usu {
         m_size = ptr.m_size;
         (*m_referenceCount)++;
     }
-
-    
         //move constructor
     template<typename T>
     shared_ptr<T[]>::shared_ptr(shared_ptr&& ptr)
@@ -163,13 +157,6 @@ namespace usu {
         }
         return *this;
     }
-
-
-        
-
-
-
-
     // Destructor  
     template<typename T>
     shared_ptr<T[]>::~shared_ptr()
@@ -190,5 +177,4 @@ namespace usu {
     {  
         return shared_ptr<T[]>(new T[N], N);
     }
-
 };
