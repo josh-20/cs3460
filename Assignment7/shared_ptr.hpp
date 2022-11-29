@@ -90,12 +90,6 @@ namespace usu {
             }
         }
     }
-    // template <typename T, unsigned int N>
-    // shared_ptr<T[]> make_shared_array()
-    // {
-    //     return shared_ptr<T[]>(new T[N], N);
-    // }
-
 
     template<typename T>
     class shared_ptr<T[]>{
@@ -104,10 +98,10 @@ namespace usu {
             shared_ptr(const shared_ptr& ptr);
             shared_ptr(shared_ptr&& ptr);
             ~shared_ptr();
-            //T* operator[](){};
+            T& operator[](const int index){if(index <= m_size)return m_pointer[index];}
             shared_ptr& operator=(const shared_ptr& ptr);
             shared_ptr& operator=(shared_ptr&& ptr);
-            int size(){return m_size;}
+            unsigned int size(){return m_size;}
             unsigned int use_count(){return *m_referenceCount;}
         private:
             T* m_pointer;
@@ -121,6 +115,7 @@ namespace usu {
         m_referenceCount(new unsigned int(1))
         {
         }
+
 
 
 
