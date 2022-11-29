@@ -104,20 +104,45 @@ namespace usu {
             shared_ptr(const shared_ptr& ptr);
             shared_ptr(shared_ptr&& ptr);
             ~shared_ptr();
-            T* operator[](){};
-            shared_ptr& operator=();
-            shared_ptr& operator=();
+            //T* operator[](){};
+            shared_ptr& operator=(const shared_ptr& ptr);
+            shared_ptr& operator=(shared_ptr&& ptr);
+            int size(){return m_size;}
+            unsigned int use_count(){return *m_referenceCount;}
         private:
             T* m_pointer;
             unsigned int* m_referenceCount;
-            T* m_front
+            int m_size;
     };
     template<typename T>
     shared_ptr<T[]>::shared_ptr(T* ptr, int num) : 
         m_pointer(ptr),
+        m_size(num),
         m_referenceCount(new unsigned int(1))
         {
         }
 
+
+
+    // Destructor  
+    template<typename T>
+    shared_ptr<T[]>::~shared_ptr()
+    {
+        if (m_pointer != nullptr){
+            (*m_referenceCount)--;
+            if (use_count() == 0){
+                delete[] m_pointer;
+                delete m_referenceCount;
+                m_size = 0;
+                m_pointer = nullptr;
+                m_referenceCount = nullptr;
+            }
+        }
+    }
+    template <typename T, unsigned int N>
+    shared_ptr<T[]> make_shared_array()
+    {  
+        return shared_ptr<T[]>(new T[N], N);
+    }
 
 };
