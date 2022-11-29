@@ -3,7 +3,6 @@ set(project_name MainRun)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
 project(${project_name})
-
 set(HEADER_FILES shared_ptr.hpp)
 set(UNIT_TEST_FILES TestMemory.cpp)
 
@@ -30,7 +29,7 @@ if (CLANG_FORMAT)
     message("clang found")
     unset(SOURCE_FILES_PATHS)
     foreach(SOURCE_FILE ${HEADER_FILES} ${UNIT_TEST_FILES} main.cpp)
-        get_source_file_property(WHERE LOCATION)
+        get_source_file_property(WHERE ${SOURCE_FILE} LOCATION)
         set(SOURCE_FILES_PATHS ${SOURCE_FILES_PATHS} ${WHERE})
     endforeach()
 

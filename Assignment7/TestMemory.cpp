@@ -2,9 +2,9 @@
 #include "shared_ptr.hpp"
 
 #include "gtest/gtest.h"
+#include <array>
 #include <memory>
 #include <string>
-#include <array>
 
 class MyClass
 {
@@ -127,7 +127,7 @@ TEST(ComplexTypes, PointerOperator)
 
 TEST(Array, CanCreateArray)
 {
-    std::array<int, 4> truth{2, 3, 5, 7};
+    std::array<int, 4> truth{ 2, 3, 5, 7 };
     usu::shared_ptr<int[]> primes = usu::make_shared_array<int, 4>();
     primes[0] = truth[0];
     primes[1] = truth[1];
