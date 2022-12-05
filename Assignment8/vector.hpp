@@ -119,7 +119,7 @@ namespace usu{
     template<typename T>
     void vector<T>::add(T value)
     {
-        if(m_size == m_capacity){
+        if(size() == capacity()){
             pointer temp = m_data;
             m_capacity = resize(m_capacity);
             m_data = std::make_shared<T[]>(capacity);
