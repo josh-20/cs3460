@@ -2,6 +2,7 @@
 #include <exception>
 #include <initializer_list>
 #include <iterator>
+#include <memory>
 
 namespace usu{
     template<typename T>
@@ -39,6 +40,7 @@ namespace usu{
                     iterator operator++(int);
                     iterator operator--();
                     iterator operator--(int);
+                    iterator operator->() {return *m_data;};
                     iterator& operator=(const iterator& rhs);
                     iterator& operator=(iterator&& rhs);
                     reference operator*()
@@ -53,8 +55,6 @@ namespace usu{
                     {
                         return !(*this == rhs);
                     }
-
-
                 private:
                     size_type m_pos;
                     pointer m_data;
@@ -76,14 +76,100 @@ namespace usu{
         private:
             size_type m_size;
             size_type m_nOfElements;       
-            T m_data;    
+            pointer m_data;    
             
     };
 
-    // //resize
-    // [](size_type currentCapacity) -> size_type
-    // {
-    //     return currentCapacity * 2;
-    // };
+    template<typename T>
+    vector<T>::vector() :
+        m_size(10),
+        m_nOfElements(0),
+        m_data(std::make_shared<T[]>(10))
+    {
+    }
+    template<typename T>
+    vector<T>::vector(size_type size) :
+        m_size([](size_type currentCapacity) -> size_type
+        {
+            return currentCapacity * 2;
+        }),
+        m_nOfElements(0),
+        m_data(std::make_shared<T[]>(m_size))
+    {
+    }
+    template<typename T>
+    vector<T>::vector(resize_type size) :
+        m_size(size_type(size) -> size_type
+        {
+            if (m_size < size)
+        }),
+        m_nOfElements(0),
+        m_data(std::make_shared<T[]>(m_size))
+    {
+    }
 
+    // copy constructor for iterator
+    template<typename T>
+    vector<T>::iterator::iterator(const iterator& obj)
+    {
+        m_pos = obj.m_pos;
+        m_data = obj.m_data;
+    }
+    // move constructor for iterator
+    template<typename T>
+    vector<T>::iterator::iterator(iterator&& obj) noexcept
+    {
+        this->m_pos = obj.m_pos;
+        this->m_data = obj.m_data;
+        obj.m_pos = 0;
+        obj.m_data = nullptr;
+    }
+    // Operators for -- and ++
+    template<typename T>
+     typename vector<T>::iterator vector<T>::iterator::operator--()
+    {
+        m_pos--;
+        return *this;
+    }
+    template <typename T>
+    typename vector<T>::iterator vector<T>::iterator::operator--(int)
+    {
+        iterator i = *this;
+        m_pos--;
+        return i;
+    }
+
+    template<typename T>
+    typename vector<T>::iterator vector<T>::iterator::operator++()
+    {
+        m_pos++;
+        return *this;
+    }
+    template <typename T>
+    typename vector<T>::iterator vector<T>::iterator::operator++(int)
+    {
+        iterator i = *this;
+        m_pos++;
+        return i;
+    }
+
+    // 
+    template <typename T>
+    typename vector<T>::iterator& vector<T>::iterator::operator=(const iterator& rhs)
+    {
+        this->m_pos = rhs.m_pos;
+        this->m_data = rhs.m_data;
+        return *this;
+    }
+
+    template <typename T>
+    typename vector<T>::iterator& vector<T>::iterator::operator=(const iterator&& rhs)
+    {
+        if (this != &rhs)
+        {
+            std::swap(this->m_pos, rhs.m_pos);
+            std::swap(this->m_data, rhs.m_data);
+        }
+        return *this;
+    }
 }
