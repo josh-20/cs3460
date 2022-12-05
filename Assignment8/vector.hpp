@@ -20,33 +20,19 @@ namespace usu{
             {
                 public:
                     using iterator_category = std::bidirectional_iterator_tag;
-                    iterator() :
-                        iterator(nullptr)
-                    {
-                    }
-                    iterator(pointer ptr) :
-                        m_data(ptr),
-                        m_pos(0)
-                    {
-                    }
-                    iterator(size_type pos, pointer ptr):
-                        m_pos(ptr),
-                        m_data(m_data)
-                    {
-                    }
+                    iterator();
+                    iterator(pointer ptr);
+                    iterator(size_type pos, pointer ptr);
                     iterator(const iterator& obj); 
                     iterator(iterator&& obj) noexcept;
                     iterator operator++();
                     iterator operator++(int);
                     iterator operator--();
                     iterator operator--(int);
-                    iterator operator->() {return *m_data;};
+                    iterator operator->();
                     iterator& operator=(const iterator& rhs);
                     iterator& operator=(iterator&& rhs);
-                    reference operator*()
-                    {
-                        return m_data[m_pos];
-                    }
+                    reference operator*();
                     bool operator==(const iterator& rhs)
                     {
                         return (m_data = rhs.m_data) && (m_pos = rhs.m_pos);
@@ -59,53 +45,141 @@ namespace usu{
                     size_type m_pos;
                     pointer m_data;
             };
-
             vector(); // Default constructor that initializes an empty vector, with an initial capacity of 10
             vector(size_type size); //Overloaded constructor that takes a size_type and creates a vecotr of that size
             vector(resize_type resize); 
             vector(size_type size, resize_type resize);
             vector(std::initializer_list<T> list);
             vector(std::initializer_list<T> list, resize_type resize);
-
+            reference operator[](size_type index);
+            void add (T value);
+            void insert(size_type index, T value);
             void remove(size_type index);
-            void clear() {m_size == 0;}
-            size_type size(){return m_nOfElements;}
-            size_type capacity(){return m_size;}
-            iterator begin() {return iterator(m_data)}
-            iterator end(){return iterator(m_size, m_data);}
+            void clear();
+            size_type size();
+            size_type capacity();
+            iterator begin();
+            iterator end();
         private:
             size_type m_size;
-            size_type m_nOfElements;       
+            size_type m_capacity;       
             pointer m_data;    
+            resize_type m_resize = [](size_type currentCapacity) -> size_type {return currentCapacity * 2;}
             
     };
-
+    
     template<typename T>
     vector<T>::vector() :
-        m_size(10),
-        m_nOfElements(0),
-        m_data(std::make_shared<T[]>(10))
+        m_capacity(10)
     {
+        m_data = std::make_shared<T[]>(m_capacity);
     }
     template<typename T>
     vector<T>::vector(size_type size) :
-        m_size([](size_type currentCapacity) -> size_type
-        {
-            return currentCapacity * 2;
-        }),
-        m_nOfElements(0),
-        m_data(std::make_shared<T[]>(m_size))
+        m_size(size),
+        m_capacity(10)
     {
+        if(m_capacity < size){
+            m_resize(size);
+        }
+        m_data = std::make_shared<T[]>(m_capacity);
     }
     template<typename T>
-    vector<T>::vector(resize_type size) :
-        m_size(size_type(size) -> size_type
-        {
-            if (m_size < size)
-        }),
-        m_nOfElements(0),
-        m_data(std::make_shared<T[]>(m_size))
+    vector<T>::vector(resize_type resize) :
+        m_capacity(10)
     {
+        m_resize = resize;
+        m_capacity = m_resize(m_capacity);
+        m_data = std::make_shared<T[]>(m_capacity)
+
+    }
+
+    template<typename T>
+    vector<T>::vector(std::initializer_list<T> list) :
+        m_capacity(10)
+    {
+        m_data = std::make_shared<T[]>(m_capacity);
+        for(T i = list.begin; i != list.end; i++){
+            add(*i);
+        }
+    }
+    template<typename T>
+    vector<T>::vector(std::initializer_list<T> list, resize_type resize) : 
+        m_capacity(10)
+    {
+        m_data = std::make_shared<T[]>(m_capacity);
+        for(T)
+    }
+
+    template<typename T>
+    typename vector<T>::reference vector<T>::operator[](size_type index){
+        return &m_data[index];
+    }   
+    // add value to the vector
+    template<typename T>
+    void vector<T>::add(T value)
+    {
+        if(m_size == m_capacity){
+            pointer temp = m_data;
+            m_capacity = resize(m_capacity);
+            m_data = std::make_shared<T[]>(capacity);
+            for (size_type i = 0; i < size; i++){
+                m_data[i] = temp[i];
+            }
+        }
+        m_data[size] = value;
+        size++;
+    }
+    template<typename T>
+    typename vector<T>::iterator vector<T>::begin(){return iterator(m_data);}
+
+    template<typename T>
+    typename vector<T>::iterator vector<T>::end(){return iterator(m_size, m_data);}
+
+    template<typename T>
+    void vector<T>::clear(){
+        m_size = 0;
+    }
+    template<typename T>
+    size_t vector<T>::size(){
+        return m_size;
+    }
+    template<typename T>
+    typename vector<T>::size_type vector<T>::capacity()
+    {
+        return m_capacity;
+    }
+
+    template<typename T>
+    vector<T>::iterator::iterator(size_type pos, pointer ptr) :
+        m_pos(ptr),
+        m_data(m_data)
+    {
+    }
+
+    template<typename T>
+    vector<T>::iterator::iterator(pointer ptr) : 
+        m_data(ptr),
+        m_pos(0)
+    {
+    }
+
+
+    template<typename T>
+    vector<T>::iterator::iterator() :
+        iterator(nullptr)
+    {    
+    }
+    
+    template<typename T>
+    typename vector<T>::reference vector<T>::iterator::operator*()
+    {
+        return m_data[m_pos];
+    }
+    template<typename T>
+    typename vector<T>::iterator vector<T>::iterator::operator->()
+    {
+        return &m_data[m_pos];
     }
 
     // copy constructor for iterator
@@ -163,7 +237,7 @@ namespace usu{
     }
 
     template <typename T>
-    typename vector<T>::iterator& vector<T>::iterator::operator=(const iterator&& rhs)
+    typename vector<T>::iterator& vector<T>::iterator::operator=(iterator&& rhs)
     {
         if (this != &rhs)
         {

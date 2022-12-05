@@ -5,10 +5,11 @@ set(UNIT_TEST_RUNNER UnitTestRunner)
 project(${project_name})
 
 set(HEADER_FILES vector.hpp)
+set(SOURCE_FILES vector.cpp)
 set(UNIT_TEST_FILES TestMemory.cpp)
 
-add_executable(${project_name} ${HEADER_FILES} main.cpp)
-add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${UNIT_TEST_FILES})
+add_executable(${project_name} ${SOURCE_FILES} ${HEADER_FILES} main.cpp)
+add_executable(${UNIT_TEST_RUNNER} ${SOURCE_FILES} ${HEADER_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${project_name} PROPERTY CXX_STANDARD 20)
 set_property(TARGET ${UNIT_TEST_RUNNER} PROPERTY CXX_STANDARD 20)
