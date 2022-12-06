@@ -86,13 +86,24 @@ namespace usu{
 
     //
     template<typename T>
-    vector<T>::vector(resize_type resize) : 
+    vector<T>::vector(resize_type resize):
+        m_size(0),
         m_capacity(10)
     {
         m_resize = resize;
         m_capacity = m_resize(m_capacity);
         m_data = std::make_shared<T[]>(m_capacity);
 
+    }
+
+    template<typename T>
+    vector<T>::vector(size_type size, resize_type resize) :
+        m_size(size),
+        m_capacity(10)
+    {
+        this->m_resize = resize;
+        this->m_capacity = m_resize(this->m_capacity);
+        this->m_data = make_shared<T[]>(this->m_capacity);
     }
 
     template<typename T>
@@ -108,11 +119,11 @@ namespace usu{
     }
     // UserResize
     template<typename T>
-    vector<T>::vector(std::initializer_list<T> list, resize_type resize) : 
+    vector<T>::vector(std::initializer_list<T> list, resize_type resize) :
         m_size(0),
-        m_capacity(10),
-        m_resize(resize)
+        m_capacity(10)
     {
+        m_resize = resize;
         m_data = std::make_shared<T[]>(this->m_capacity);
         for (auto i = list.begin(); i != list.end(); i++)
         {
@@ -163,7 +174,7 @@ namespace usu{
         }
     }
 
-    // remove value at location chift everything down.
+    // remove value at location shift everything down.
     template<typename T>
     void vector<T>::remove(size_type index){
         pointer temp = m_data;
@@ -211,8 +222,8 @@ namespace usu{
 
     template<typename T>
     vector<T>::iterator::iterator(pointer ptr) : 
-        m_pos(0),
-        m_data(ptr)
+       m_data(ptr),
+       m_pos(0)
     {
     }
 
@@ -231,7 +242,7 @@ namespace usu{
     template<typename T>
     T* vector<T>::iterator::operator->()
     {
-        return &m_data[m_pos];
+        return &this->m_data[this->m_pos];
     }
 
     // copy constructor for iterator
