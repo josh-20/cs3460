@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
-set(project_name MainRun)
+set(project_name Main)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
 project(${project_name})
 
 set(HEADER_FILES vector.hpp)
 set(SOURCE_FILES vector.cpp)
-set(UNIT_TEST_FILES TestMemory.cpp)
+set(UNIT_TEST_FILES TestVector.cpp)
 
 add_executable(${project_name} ${SOURCE_FILES} ${HEADER_FILES} main.cpp)
 add_executable(${UNIT_TEST_RUNNER} ${SOURCE_FILES} ${HEADER_FILES} ${UNIT_TEST_FILES})
@@ -30,8 +30,8 @@ find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)
     message("clang found")
     unset(SOURCE_FILES_PATHS)
-    foreach(SOURCE_FILE ${HEADER_FILES} ${UNIT_TEST_FILES} main.cpp)
-        get_source_file_property(WHERE LOCATION)
+    foreach(SOURCE_FILE ${SOURCE_FILES} ${HEADER_FILES} ${UNIT_TEST_FILES} main.cpp)
+        get_source_file_property(WHERE ${SOURCE_FILE} LOCATION)
         set(SOURCE_FILES_PATHS ${SOURCE_FILES_PATHS} ${WHERE})
     endforeach()
 
